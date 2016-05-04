@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 
-namespace System.Web
+namespace System
 {
     /// <summary>
     /// 常用 扩展方法定义
     /// </summary>
-    public static class CommonMethod
+    public static class ExtendMethod
     {
         /// <summary>
         /// 将object 序列化成json字符串
@@ -35,8 +35,6 @@ namespace System.Web
             T t = (T)serializer.Deserialize(str, typeof(T));
             return t;
         }
-
-
         /// <summary>
         /// 过滤掉 html 字符串 方法
         /// </summary>
@@ -69,9 +67,32 @@ namespace System.Web
             Htmlstring.Replace("<", "");
             Htmlstring.Replace(">", "");
             Htmlstring.Replace("\r\n", "");
-            Htmlstring = HttpContext.Current.Server.HtmlEncode(Htmlstring).Trim();
+            //Htmlstring = HttpContext.Current.Server.HtmlEncode(Htmlstring).Trim();
+            Htmlstring = HttpUtility.HtmlEncode(Htmlstring).Trim();
 
             return Htmlstring;
+        }
+
+
+
+        /// <summary>
+        /// 过滤重复数据
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector"></param>
+        /// <returns></returns>
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
         }
     }
 }

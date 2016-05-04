@@ -168,7 +168,8 @@ namespace Common
         /// <returns></returns>
         public static string GetCurrentDLLSub(string sub)
         {
-            return CurrentDLL + "\\"+sub;
+            DirectoryInfo info = new DirectoryInfo(CurrentDLL);
+          return  info.CreateSubdirectory(sub).FullName;
         }
         /// <summary>
         /// 获取当前程序的子目录

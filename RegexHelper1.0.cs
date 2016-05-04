@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace System
 {
+    /// <summary>
+    /// 常用正则表达式整理
+    /// </summary>
     public class RegexExpression
     {
         //英文字母
@@ -20,7 +23,7 @@ namespace System
         //手机号
         public static readonly string Phone = @"^1[3-8]+\d{9}$";
         //邮箱
-        public static readonly string EMail = @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$";
+        public static readonly string EMail = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
     }
     public class RegexHelper
     {
@@ -52,15 +55,28 @@ namespace System
         }
 
         /// <summary>
+        /// 判断富文本是否为空
+        /// 是否只有任意的空白符
+        ///------ 包括空格，制表符(Tab)，换行符，中文全角空格等
+        /// </summary>
+        /// <param name="str">判断字符串</param>
+        /// <returns></returns>
+        public static bool IsNull_Rich(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return true;
+            Regex reg = new Regex(@"\S",RegexOptions.Multiline);
+            return !reg.IsMatch(str);
+        }
+        /// <summary>
         /// 判断是否是英文字符
         /// </summary>
-        public static bool IsCharacter(string str,bool ignoreCase=false)
+        public static bool IsCharacter(string str, bool ignoreCase = false)
         {
-            if(ignoreCase)
-            return IsMatch(RegexExpression.Character, str);
+            if (ignoreCase)
+                return IsMatch(RegexExpression.Character, str);
             return IsMatchIgnoreCase(RegexExpression.Character, str);
         }
-
         /// <summary>
         /// 判断一个字符串，是否匹配指定的表达式(区分大小写的情况下)
         /// </summary>
@@ -74,7 +90,6 @@ namespace System
                 return false;
             return reg.IsMatch(str);
         }
-
         /// <summary>
         /// 判断一个字符串，是否匹配指定的表达式(不区分大小写的情况下)
         /// </summary>
@@ -86,7 +101,6 @@ namespace System
             Regex reg = new Regex(expression, RegexOptions.IgnoreCase);
             return reg.IsMatch(str);
         }
-
         #endregion
 
 

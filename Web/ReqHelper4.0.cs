@@ -182,6 +182,80 @@ namespace System.Web
         #endregion
 
 
+
+        #region 获取bollean类型
+        /// <summary>
+        /// 获取QueryString参数
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>可空bool类型</returns>
+        public static bool? GetBoolQuery(string key)
+        {
+            bool result = true;
+            if (bool.TryParse(GetStringQuery(key), out result))
+            {
+                return result;
+            }
+            return null;
+        }
+        /// <summary>
+        /// 获取Form参数
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>可空bool类型</returns>
+        public static bool? GetBoolForm(string key)
+        {
+            bool result = true;
+            if (bool.TryParse(GetStringForm(key), out result))
+            {
+                return result;
+            }
+            return null;
+        }
+        /// <summary>
+        /// 获取RouteData参数
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>值</returns>
+        public static bool? GetBoolRotate(string key)
+        {
+            bool result = true;
+            if (bool.TryParse(GetStringRoute(key), out result))
+            {
+                return result;
+            }
+            return null;
+        }
+        /// <summary>
+        /// 获取请求参数，先检索RouteData,再检索Form，再检索QueryString
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>可空bool类型</returns>
+        public static bool? GetBool(string key)
+        {
+            bool result = true;
+            if (bool.TryParse(GetString(key), out result))
+            {
+                return result;
+            }
+            return null;
+        }
+        /// <summary>
+        /// 获取请求参数，先检索Form，在检索QueryString
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="defVal">默认值</param>
+        /// <returns>bool类型</returns>
+        public static bool GetBool(string key, bool defVal)
+        {
+            bool? result = GetBool(key);
+            if (result == null)
+                return defVal;
+            return result.Value;
+        }
+        #endregion
+
+
         #region 获取DateTime类型
         /// <summary>
         /// 获取QueryString参数

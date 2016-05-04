@@ -21,7 +21,7 @@ namespace Common
         {
             get
             {
-                return getAppSetting("RootPath");
+                return Get("RootPath");
             }
         }
         /// <summary>
@@ -40,12 +40,27 @@ namespace Common
         }
 
         /// <summary>
+        /// 上传临时目录，追加反斜杠
+        /// </summary>
+        public static string TempFile
+        {
+            get { return Get("TempFile"); }
+        }
+        /// <summary>
+        /// 上传目录，追加反斜杠
+        /// </summary>
+        public static string UploadPath
+        {
+            get { return Get("B_UploadPath"); }
+        }
+
+        /// <summary>
         /// 判断是否启用错误处理
         /// </summary>
         public static bool IsCustomError
         {
             get {
-                string value = getAppSetting("CustomError");
+                string value = Get("CustomError");
                 if (value == "1")
                     return true;
 
@@ -53,9 +68,41 @@ namespace Common
             }
         }
 
-        private static string getAppSetting(string key)
+
+        /// <summary>
+        /// 获取节点值,字符串类型
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="isNull">值是否可以为空或空字符串</param>
+        /// <returns></returns>
+        public static string Get(string key, bool isNull = false)
         {
-           return System.Configuration.ConfigurationManager.AppSettings.Get(key);
+            string value = System.Configuration.ConfigurationManager.AppSettings.Get(key);
+            if (isNull)
+                return value;
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new Exception("获取config文件中的节点失败，key=" + key);
+            }
+            return value;
+        }
+        /// <summary>
+        /// 获取节点值，
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="isNull">值是否可以为空</param>
+        /// <returns></returns>
+        public static int GetInt(string key, bool isNull = false)
+        {
+            string value = Get(key, isNull);
+            int number = 0;
+            if (int.TryParse(value, out number))
+            {
+                return number;
+            }
+            if (isNull == false)
+                throw new Exception("获取config文件中的节点int类型失败，key=" + key);
+            return number;
         }
     }
 }

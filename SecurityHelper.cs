@@ -28,6 +28,7 @@ namespace Common
         #endregion
 
 
+
         #region DES
         /// <summary> 
         /// 加密数据 
@@ -105,7 +106,6 @@ namespace Common
             }
             return result;
         }
-
         /// <summary>
         /// Base64加密，采用utf8编码方式加密
         /// </summary>
@@ -115,7 +115,6 @@ namespace Common
         {
             return EncodeBase64(Encoding.UTF8, source);
         }
-
         /// <summary>
         /// Base64解密
         /// </summary>
@@ -136,7 +135,6 @@ namespace Common
             }
             return decode;
         }
-
         /// <summary>
         /// Base64解密，采用utf8编码方式解密
         /// </summary>

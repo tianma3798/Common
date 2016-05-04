@@ -8,7 +8,7 @@ using System.Net;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace System.Net
 {
@@ -26,6 +26,47 @@ namespace System.Net
         {
             string result = "";
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+            Stream stream = resp.GetResponseStream();
+            try
+            {
+                //获取内容
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    result = reader.ReadToEnd();
+                }
+            }
+            finally
+            {
+                stream.Close();
+            }
+            return result;
+        }
+        /// <summary>
+        /// 发送Get请求
+        /// </summary>
+        /// <param name="url">地址</param>
+        /// <param name="dic">请求参数定义</param>
+        /// <returns></returns>
+        public static string Get(string url, Dictionary<string, string> dic)
+        {
+            string result = "";
+            StringBuilder builder = new StringBuilder();
+            builder.Append(url);
+            if (dic.Count > 0)
+            {
+                builder.Append("?");
+                int i = 0;
+                foreach (var item in dic)
+                {
+                    if (i > 0)
+                        builder.Append("&");
+                    builder.AppendFormat("{0}={1}", item.Key, item.Value);
+                    i++;
+                }
+            }
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(builder.ToString());
+            //添加参数
             HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
             Stream stream = resp.GetResponseStream();
             try
@@ -61,7 +102,47 @@ namespace System.Net
             }
             return result;
         }
+        /// <summary>
+        /// 指定Post地址使用Get 方式获取全部字符串
+        /// </summary>
+        /// <param name="url">请求后台地址</param>
+        /// <returns></returns>
+        public static string Post(string url,Dictionary<string,string> dic)
+        {
+            string result = "";
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
 
+            #region 添加Post 参数
+            StringBuilder builder = new StringBuilder();
+            int i = 0;
+            foreach (var item in dic)
+            {
+                if (i > 0)
+                    builder.Append("&");
+                builder.AppendFormat("{0}={1}", item.Key, item.Value);
+                i++;
+            }
+            //byte[] data = Encoding.ASCII.GetBytes(builder.ToString());
+            byte[] data = Encoding.UTF8.GetBytes(builder.ToString());
+            req.ContentLength = data.Length;
+            using (Stream reqStream = req.GetRequestStream())
+            {
+                reqStream.Write(data, 0, data.Length);
+                reqStream.Close();
+            }
+            #endregion
+
+            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+            Stream stream = resp.GetResponseStream();
+            //获取响应内容
+            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+            {
+                result = reader.ReadToEnd();
+            }
+            return result;
+        }
         /// <summary>
         /// 下载外网文件到指定位置
         /// </summary>
@@ -80,6 +161,38 @@ namespace System.Net
             {
                 return false;
             }
+        }
+        /// <summary>
+        /// 异步下载外网文件到指定位置
+        /// </summary>
+        /// <param name="url">下载的地址</param>
+        /// <param name="target">保存的地址</param>
+        /// <returns></returns>
+        public static bool DownLoadAsnc(string url, string target)
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                //使用异步下载
+                client.DownloadFileAsync(new Uri(url), target);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 下载文件，返回下载任务
+        /// </summary>
+        /// <param name="url">下载地址</param>
+        /// <param name="target">保存地址</param>
+        /// <returns></returns>
+        public static Task DownLoadTaskAsnc(string url, string target)
+        {
+            WebClient client = new WebClient();
+            //使用异步下载
+            return client.DownloadFileTaskAsync(new Uri(url), target);
         }
         /// <summary>
         /// 下载第三方用户的头像,并保存到当前用户的文件夹
