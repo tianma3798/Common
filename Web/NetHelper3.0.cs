@@ -157,9 +157,10 @@ namespace System.Net
                 client.DownloadFile(url, target);
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                // ex.Message += "下载外网文件失败," + ex.Message;
+                throw new Exception("下载外网文件失败," + ex.Message);
             }
         }
         /// <summary>

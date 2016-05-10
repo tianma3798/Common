@@ -121,7 +121,6 @@ namespace System.Web
                 return CheckMobile(userAgent);
             }
         }
-
         /// <summary>
         /// 根据客户端代理，判断请求是否来自移动终端
         /// </summary>
@@ -129,6 +128,9 @@ namespace System.Web
         /// <returns></returns>
         public static bool CheckMobile(string userAgent)
         {
+            //如果没有客户端信息的默认为pc版
+            if (string.IsNullOrEmpty(userAgent))
+                return false;
             if (userAgent.IndexOf("Noki") > -1 || // Nokia phones and emulators     
                 userAgent.IndexOf("Android") > -1 ||   //Android 手机
                   userAgent.IndexOf("iPhone") > -1 ||  //iPhone  手机

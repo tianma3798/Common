@@ -623,8 +623,5 @@ namespace System.Web
             return req.Url.LocalPath + GetUrl_Params(key, value == null ? null : value.ToString(), isPager);
         }
         #endregion
-
-
-
     }
 }
