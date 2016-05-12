@@ -17,17 +17,30 @@ namespace Common
 
         #region md5
         /// <summary>
-        /// MD5加密字符串
+        /// MD5加密字符串（32位大写）
         /// </summary>
         /// <param name="source">源字符串</param>
         /// <returns>加密后的字符串</returns>
         public static string MD5(string source)
         {
-            return FormsAuthentication.HashPasswordForStoringInConfigFile(source, "MD5").ToUpper();
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] bytes = Encoding.UTF8.GetBytes(source);
+            string result = BitConverter.ToString(md5.ComputeHash(bytes));
+            return result.Replace("-", "");
+        }
+        /// <summary>
+        /// MD5加密字符串（16位大写）
+        /// </summary>
+        /// <param name="source">源字符串</param>
+        /// <returns>加密后的字符串</returns>
+        public static string MD5_16(string source)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] bytes = Encoding.UTF8.GetBytes(source);
+            string result = BitConverter.ToString(md5.ComputeHash(bytes), 4, 8);
+            return result.Replace("-", "");
         }
         #endregion
-
-
 
         #region DES
         /// <summary> 
@@ -81,9 +94,6 @@ namespace Common
             return Encoding.Default.GetString(ms.ToArray());
         }
         #endregion
-
-
-
 
         #region base64
         /// <summary>
@@ -145,6 +155,5 @@ namespace Common
             return DecodeBase64(Encoding.UTF8, result);
         }
         #endregion
-
     }
 }

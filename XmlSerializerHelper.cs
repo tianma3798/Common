@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 
 namespace Common
 {
+    /// <summary>
+    /// Xml序列化帮助类
+    /// </summary>
     public class XmlSerializerHelper
     {
         //对应的磁盘文件路径
