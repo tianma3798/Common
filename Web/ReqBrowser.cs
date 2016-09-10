@@ -64,63 +64,6 @@ namespace System.Web
         {
             return req.Browser.Platform;
         }
-
-
-        /// <summary>
-        /// 获取客户端信息
-        /// </summary>
-        /// <returns></returns>
-        public static BrowserInfo GetBrowseInfo()
-        {
-            BrowserInfo info = new BrowserInfo();
-            info.IP = GetIP();
-            info.UserAgent = GetUserAgent();
-            info.Browser = GetBrowser();
-            info.BrowseVersion = GetBrowserVersion();
-            info.Platform = GetPlatform();
-            return info;
-        }
-    }
-    /// <summary>
-    /// 客户端信息
-    /// </summary>
-    public class BrowserInfo
-    {
-        /// <summary>
-        /// 请求IP地址
-        /// </summary>
-        public string IP { get; set; }
-        /// <summary>
-        /// 请求浏览器代理
-        /// </summary>
-        public string UserAgent { get; set; }
-        /// <summary>
-        /// 请求浏览器名称
-        /// </summary>
-        public string Browser { get; set; }
-        /// <summary>
-        /// 请求浏览器版本
-        /// </summary>
-        public string BrowseVersion { get; set; }
-        /// <summary>
-        /// 请求操作系统平台
-        /// </summary>
-        public string Platform { get; set; }
-
-        /// <summary>
-        /// 判断请求是否来自移动终端
-        /// </summary>
-        public bool IsFromMobile
-        {
-            get
-            {
-                string userAgent = this.UserAgent;
-                if (string.IsNullOrEmpty(userAgent))
-                    return false;
-
-                return CheckMobile(userAgent);
-            }
-        }
         /// <summary>
         /// 根据客户端代理，判断请求是否来自移动终端
         /// </summary>
@@ -168,6 +111,60 @@ namespace System.Web
             else
             {
                 return false;
+            }
+        }
+        /// <summary>
+        /// 获取客户端信息
+        /// </summary>
+        /// <returns></returns>
+        public static BrowserInfo GetBrowseInfo()
+        {
+            BrowserInfo info = new BrowserInfo();
+            info.IP = GetIP();
+            info.UserAgent = GetUserAgent();
+            info.Browser = GetBrowser();
+            info.BrowserVersion = GetBrowserVersion();
+            info.Platform = GetPlatform();
+            return info;
+        }
+    }
+    /// <summary>
+    /// 客户端信息
+    /// </summary>
+    public class BrowserInfo
+    {
+        /// <summary>
+        /// 请求IP地址
+        /// </summary>
+        public string IP { get; set; }
+        /// <summary>
+        /// 请求浏览器代理
+        /// </summary>
+        public string UserAgent { get; set; }
+        /// <summary>
+        /// 请求浏览器名称
+        /// </summary>
+        public string Browser { get; set; }
+        /// <summary>
+        /// 请求浏览器版本
+        /// </summary>
+        public string BrowserVersion { get; set; }
+        /// <summary>
+        /// 请求操作系统平台
+        /// </summary>
+        public string Platform { get; set; }
+
+        /// <summary>
+        /// 判断请求是否来自移动终端
+        /// </summary>
+        public bool IsFromMobile
+        {
+            get
+            {
+                string userAgent = this.UserAgent;
+                if (string.IsNullOrEmpty(userAgent))
+                    return false;
+                return ReqBrowser.CheckMobile(userAgent);
             }
         }
     }

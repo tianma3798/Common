@@ -20,7 +20,6 @@ namespace System.Web
             resp = HttpContext.Current.Response;
         }
 
-
         #region 获取String类型的值
         /// <summary>
         /// 获取QueryString参数
@@ -354,19 +353,15 @@ namespace System.Web
         {
             resp.Write(str);
         }
-        /// <summary>
-        /// SHA1 加密方法
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public string Sha1(string source)
-        {
-            return FormsAuthentication.HashPasswordForStoringInConfigFile(source, "SHA1");
-        }
-
+        ///// <summary>
+        ///// SHA1 加密方法
+        ///// </summary>
+        ///// <param name="source"></param>
+        ///// <returns></returns>
+        //public string Sha1(string source)
+        //{
+        //    return FormsAuthentication.HashPasswordForStoringInConfigFile(source, "SHA1");
+        //}
         #endregion
-
     }
-
-
 }

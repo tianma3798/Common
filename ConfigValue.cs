@@ -14,7 +14,7 @@ namespace Common
     {
         /// <summary>
         /// 获取网站的根目录
-        /// H:/蔚蓝留学网/WLLiuXue/WLLiuXue
+        /// key=RootPath
         /// 没有反斜杠
         /// </summary>
         public static string RootPath
@@ -25,7 +25,7 @@ namespace Common
             }
         }
         /// <summary>
-        /// 数据存储位置
+        /// 数据存储位置,RootPath/data/
         /// 有反斜杠
         /// </summary>
         public static string DataPath
@@ -41,6 +41,7 @@ namespace Common
 
         /// <summary>
         /// 上传临时目录，追加反斜杠
+        /// key=TempFile
         /// </summary>
         public static string TempFile
         {
@@ -48,14 +49,15 @@ namespace Common
         }
         /// <summary>
         /// 上传目录，追加反斜杠
+        /// key=B_UploadPath
         /// </summary>
         public static string UploadPath
         {
             get { return Get("B_UploadPath"); }
         }
-
         /// <summary>
         /// 判断是否启用错误处理
+        /// key=CustomError
         /// </summary>
         public static bool IsCustomError
         {
@@ -67,8 +69,6 @@ namespace Common
                 return false;
             }
         }
-
-
         /// <summary>
         /// 获取节点值,字符串类型
         /// </summary>

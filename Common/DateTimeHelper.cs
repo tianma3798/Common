@@ -11,7 +11,7 @@ namespace System
     /// </summary>
     public class DateTimeHelper
     {
-        #region 数字相关
+        #region 数字随机数、随机字符等
         /// <summary>
         /// 获取指定位数的数字 字符
         /// </summary>
@@ -24,6 +24,38 @@ namespace System
             for (int i = 0; i < count; i++)
             {
                 builder.Append(_random.Next(0, 10));
+            }
+            return builder.ToString();
+        }
+        /// <summary>
+        /// 获取指定个数的随机 字符（字母+数字）
+        /// </summary>
+        /// <param name="count">获取数量</param>
+        /// <param name="showAll">使用全部字符</param>
+        /// <returns></returns>
+        public static string GetCode_Ran(int count, bool showAll = false)
+        {
+            StringBuilder builder = new StringBuilder(count);
+            //验证码的字符集，去掉了一些容易混淆的字符 
+            char[] character = null;
+            if (showAll)
+            {
+                //显示全字符
+                character = new char[]{'0','1','2', '3', '4', '5', '6','7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I', 'J', 'K', 'L', 'M', 'N','O', 'P','Q', 'R', 'S','T', 'U','V', 'W', 'X', 'Y','Z' };
+            }
+            else
+            {
+                //过滤掉了部分容易混淆的字符
+                character = new char[] { '2', '3', '4', '5', '6', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'W', 'X', 'Y' };
+            }
+            if (count > character.Length)
+                throw new Exception("GetCode_Ran 的 count值不能大于源字符的总长度");
+            Random rnd = new Random();
+            //生成验证码字符串 
+            for (int i = 0; i < count; i++)
+            {
+                builder.Append(character[rnd.Next(character.Length)]);
             }
             return builder.ToString();
         }
@@ -47,7 +79,6 @@ namespace System
         {
             return GetTimeCode() + GetNumber_Ran(4);
         }
-
         /// <summary>
         /// 根据当前时间问候
         /// </summary>
@@ -88,7 +119,5 @@ namespace System
             return end.AddDays(-1 * spanDiay);
         }
         #endregion
-
-
     }
 }

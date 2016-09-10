@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace Common
 {
+    /// <summary>
+    /// 使用反射， 获取object 对象的属性
+    /// </summary>
     public class ObjectHelper
     {
-        //获取 object 对象的 指定属性
-        //返回字符串
+        /// <summary>
+        /// 获取string 属性值
+        /// </summary>
+        /// <param name="obj">当前 对象</param>
+        /// <param name="property">属性名</param>
+        /// <returns></returns>
         public static string GetString(object obj, string property)
         {
             string val = obj.GetType().GetProperty(property).GetValue(obj) as string;
@@ -17,7 +24,12 @@ namespace Common
                 return "";
             return val;
         }
-        //获取int
+        /// <summary>
+        /// 获取int 属性值
+        /// </summary>
+        /// <param name="obj">当前对象</param>
+        /// <param name="property">属性名</param>
+        /// <returns></returns>
         public static int GetInt(object obj, string property)
         {
             object val = obj.GetType().GetProperty(property).GetValue(obj);

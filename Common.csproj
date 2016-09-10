@@ -11,12 +11,13 @@
     <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Dll_Common\</OutputPath>
+    <OutputPath>..\..\DLL_Common\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,17 +42,18 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\MyWork\爱短句\ShotSentence\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ByteHelper.cs" />
     <Compile Include="Common\ImgHelper.cs" />
+    <Compile Include="Common\PageInfo.cs" />
     <Compile Include="ConfigValue.cs" />
+    <Compile Include="Mail\SmtpHelper.cs" />
+    <Compile Include="Mail\SmtpSendInfo.cs" />
     <Compile Include="Web\CookieHelper.cs" />
-    <Compile Include="DateTimeHelper.cs" />
+    <Compile Include="Common\DateTimeHelper.cs" />
     <Compile Include="ExtendMethod.cs" />
     <Compile Include="Common\LocalPathHelper3.0.cs" />
     <Compile Include="Web\NetHelper3.0.cs" />

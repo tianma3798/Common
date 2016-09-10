@@ -16,7 +16,9 @@ namespace Common
     {
         //对应的磁盘文件路径
         private string _FileName;
-
+        /// <summary>
+        /// 对应的磁盘文件路径
+        /// </summary>
         public string FileName
         {
             get { return _FileName; }
@@ -24,51 +26,53 @@ namespace Common
         }
         //Xml要序列化的类型
         private Type _Type;
+        /// <summary>
+        /// Xml要序列化的类型
+        /// </summary>
         public Type Type
         {
             get { return _Type; }
             set { _Type = value; }
         }
         private XmlSerializer _XmlSerializer;
+        /// <summary>
+        /// 构造器
+        /// </summary>
         public XmlSerializerHelper()
         {
 
         }
+        /// <summary>
+        /// 构造器，指定文件地址
+        /// </summary>
+        /// <param name="filename"></param>
         public XmlSerializerHelper(string filename)
         {
             this.FileName = filename;
         }
-        //public XmlSerializerHelper(string filename, Type type)
+        ///// <summary>
+        ///// 序列化到磁盘
+        ///// </summary>
+        ///// <param name="obj">保存的对象</param>
+        //public void Serialize(object obj)
         //{
-        //    _XmlSerializer = new XmlSerializer(type);
-        //    this.FileName = filename;
+        //    StreamWriter writer = new StreamWriter(FileName);
+        //    try
+        //    {
+        //        _XmlSerializer.Serialize(writer, obj);
+        //    }
+        //    finally
+        //    {
+        //        writer.Close();
+        //    }
         //}
 
-
-
-
-        /// <summary>
-        /// 序列化到磁盘
-        /// </summary>
-        /// <param name="obj">保存的对象</param>
-        public void XmlSerialize(object obj)
-        {
-            StreamWriter writer = new StreamWriter(FileName);
-            try
-            {
-                _XmlSerializer.Serialize(writer, obj);
-            }
-            finally
-            {
-                writer.Close();
-            }
-        }
         /// <summary>
         /// 序列化到磁盘
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">保存的对象</param>
-        public void XmlSerialize<T>(T obj)
+        public void Serialize<T>(T obj)
         {
             if (_XmlSerializer == null)
             {
@@ -84,16 +88,12 @@ namespace Common
                 writer.Close();
             }
         }
-
-
-
-
         /// <summary>
         /// 反序列化，返回
         /// </summary>
         /// <typeparam name="T">反序列化后的类型</typeparam>
         /// <returns></returns>
-        public T XmlDeserialize<T>()
+        public T Deserialize<T>()
         {
             if (_XmlSerializer == null)
             {

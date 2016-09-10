@@ -13,10 +13,16 @@ namespace System.Web
     /// </summary>
     public static class ReqHelper
     {
+        /// <summary>
+        /// 请求上下文
+        /// </summary>
         public static HttpRequest req
         {
             get { return HttpContext.Current.Request; }
         }
+        /// <summary>
+        /// 响应上下文
+        /// </summary>
         public static HttpResponse resp
         {
             get { return HttpContext.Current.Response; }
@@ -456,18 +462,31 @@ namespace System.Web
 
         #region 获取string 列表 并转换成 List<int>
         /// <summary>
-        /// 获取 string 列表
+        /// 获取 string 列表,来自路由参数
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">键值</param>
         /// <returns></returns>
         public static List<int> GetListRoute(string key)
         {
             List<int> list = new List<int>();
-
             string result = GetStringRoute(key);
             if (result != ""&&result!="0")
             {
                 list = result.Split(',').Select(q=>Convert.ToInt32(q)).ToList();
+            }
+            return list;
+        }
+        /// <summary>
+        /// 获取 string 列表，来自Post参数
+        /// </summary>
+        /// <returns></returns>
+        public static List<int> GetListForm(string key)
+        {
+            List<int> list = new List<int>();
+            string result = GetStringForm(key);
+            if (result != "" && result != "0")
+            {
+                list = result.Split(',').Select(q => Convert.ToInt32(q)).ToList();
             }
             return list;
         }

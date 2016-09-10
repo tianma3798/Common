@@ -43,12 +43,20 @@ namespace System
         {
             return IsMatch(RegexExpression.Number, str);
         }
-        //4.验证字符串是否是手机号
+        /// <summary>
+        /// 4.验证字符串是否是手机号
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static bool IsPhone(string str)
         {
             return IsMatch(RegexExpression.Phone, str);
         }
-        //5.验证字符串是否是邮箱
+        /// <summary>
+        /// 5.验证字符串是否是邮箱
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static bool IsEmail(string str)
         {
             return IsMatch(RegexExpression.EMail, str);
@@ -102,7 +110,6 @@ namespace System
             return reg.IsMatch(str);
         }
         #endregion
-
 
         #region 常用替换
         /// <summary>

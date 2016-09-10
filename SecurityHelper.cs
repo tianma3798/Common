@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Web.Security;
+using System.Web;
 
 namespace Common
 {
@@ -14,6 +15,49 @@ namespace Common
     /// </summary>
     public class SecurityHelper
     {
+        #region HTML 编码/解码 HttpUtility.HtmlEncode/HtmlDecode
+        /// <summary>
+        /// HTML编码处理
+        /// </summary>
+        /// <param name="source">源代码</param>
+        /// <returns></returns>
+        public static string HtmlEncode(string source)
+        {
+            return HttpUtility.HtmlEncode(source);
+        }
+        /// <summary>
+        /// HTML 解码处理
+        /// </summary>
+        /// <param name="source">源代码</param>
+        /// <returns></returns>
+        public static string HtmlDecode(string source)
+        {
+            return HttpUtility.HtmlDecode(source);
+        }
+        #endregion
+
+        #region  URL编码/解码  HttpUtility.UrlEncode/UrlDecode  
+        /// <summary>
+        /// UrlEncode
+        /// utf-8格式加密
+        /// </summary>
+        /// <param name="source">源字符串</param>
+        /// <returns></returns>
+        public static string UrlEncode(string source)
+        {
+            return HttpUtility.UrlEncode(source);
+        }
+        /// <summary>
+        /// UrlDecode
+        /// utf-8格式解密
+        /// </summary>
+        /// <param name="source">源字符串</param>
+        /// <returns></returns>
+        public static string UrlDecode(string source)
+        {
+            return HttpUtility.UrlDecode(source);
+        }
+        #endregion
 
         #region md5
         /// <summary>
@@ -39,6 +83,41 @@ namespace Common
             byte[] bytes = Encoding.UTF8.GetBytes(source);
             string result = BitConverter.ToString(md5.ComputeHash(bytes), 4, 8);
             return result.Replace("-", "");
+        }
+        #endregion
+
+        #region sha1 
+        /// <summary>
+        /// SHA1 加密，返回大写字符串
+        /// </summary>
+        /// <param name="content">需要加密字符串</param>
+        /// <returns>返回40位UTF8 大写</returns>
+        public static string SHA1(string content)
+        {
+            return SHA1(content, Encoding.UTF8);
+        }
+        /// <summary>
+        /// SHA1 加密，返回大写字符串
+        /// </summary>
+        /// <param name="content">需要加密字符串</param>
+        /// <param name="encode">指定加密编码</param>
+        /// <returns>返回40位大写字符串</returns>
+        public static string SHA1(string content, Encoding encode)
+        {
+            try
+            {
+                SHA1 sha1 = new SHA1CryptoServiceProvider();
+                byte[] bytes_in = encode.GetBytes(content);
+                byte[] bytes_out = sha1.ComputeHash(bytes_in);
+                sha1.Dispose();
+                string result = BitConverter.ToString(bytes_out);
+                result = result.Replace("-", "");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("SHA1加密出错：" + ex.Message);
+            }
         }
         #endregion
 
@@ -93,6 +172,49 @@ namespace Common
             cs.FlushFinalBlock();
             return Encoding.Default.GetString(ms.ToArray());
         }
+        #endregion
+
+        #region 16进制字符串转换
+        ///// <summary>
+        ///// 将普通的字符串转换成16进制的字符串
+        ///// </summary>
+        ///// <param name="s"></param>
+        ///// <returns></returns>
+        //public static string StringToHex(string s)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    //sb.Append("0x");
+        //    char[] hexs = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
+        //    int len = s.Length;
+        //    char[] cs = s.ToCharArray();
+        //    for (int i = 0; i < len; ++i)
+        //    {
+        //        sb.Append(hexs[cs[i] >> 4]);
+        //        sb.Append(hexs[cs[i] & 0xf]);
+        //    }
+
+        //    return sb.ToString();
+        //}
+        ///// <summary>
+        ///// 将16进制的字符串转换成普通的字符串
+        ///// </summary>
+        ///// <param name="s"></param>
+        ///// <returns></returns>
+        //public static string HexToString(string s)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    int len = s.Length;
+
+        //    char c;
+        //    for (int i = 0; i < len; i += 2)
+        //    {
+        //        c = Convert.ToChar(Convert.ToInt16("0x" + s.Substring(i, 2), 16));
+        //        sb.Append(c);
+        //    }
+
+        //    return sb.ToString();
+        //}
         #endregion
 
         #region base64
