@@ -10,7 +10,7 @@ using System.Drawing.Drawing2D;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.Net
+namespace Common
 {
     /// <summary>
     /// http协议访问方法封装
@@ -109,8 +109,9 @@ namespace System.Net
         /// 指定Post地址使用Get 方式获取全部字符串
         /// </summary>
         /// <param name="url">请求后台地址</param>
+        /// <param name="content">Post提交数据内容(utf-8编码的)</param>
         /// <returns></returns>
-        public static string Post(string url, string  content)
+        public static string Post(string url, string content)
         {
             string result = "";
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
@@ -158,7 +159,6 @@ namespace System.Net
                 builder.AppendFormat("{0}={1}", item.Key, item.Value);
                 i++;
             }
-            //byte[] data = Encoding.ASCII.GetBytes(builder.ToString());
             byte[] data = Encoding.UTF8.GetBytes(builder.ToString());
             req.ContentLength = data.Length;
             using (Stream reqStream = req.GetRequestStream())
@@ -180,6 +180,7 @@ namespace System.Net
         #endregion
 
 
+        #region 简单下载文件
         /// <summary>
         /// 下载外网文件到指定位置
         /// </summary>
@@ -275,7 +276,7 @@ namespace System.Net
                 //png.Dispose();
 
 
-                bit.Save(userpath, Drawing.Imaging.ImageFormat.Png);
+                bit.Save(userpath, System.Drawing.Imaging.ImageFormat.Png);
 
                 stream.Close();
                 client.Dispose();
@@ -287,5 +288,7 @@ namespace System.Net
                 return "";
             }
         }
+        #endregion
+
     }
 }

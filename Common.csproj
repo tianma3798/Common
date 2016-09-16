@@ -64,7 +64,8 @@
     <Compile Include="Web\ReqHelper4.0.cs" />
     <Compile Include="Web\RequestHelper3.0.cs" />
     <Compile Include="SecurityHelper.cs" />
-    <Compile Include="SessionHelper.cs" />
+    <Compile Include="Web\SessionHelper.cs" />
+    <Compile Include="Web\UrlAnalyze.cs" />
     <Compile Include="XmlSerializerHelper.cs" />
   </ItemGroup>
   <ItemGroup />
