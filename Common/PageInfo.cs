@@ -12,6 +12,10 @@ namespace System
     public class PageInfo
     {
         /// <summary>
+        /// 空处理
+        /// </summary>
+        public PageInfo() { }
+        /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="PageIndex">当前页</param>
@@ -25,6 +29,7 @@ namespace System
         /// 当前页 >=1
         /// </summary>
         public int PageIndex { get; set; }
+
         /// <summary>
         /// 页数据量
         /// </summary>
@@ -62,8 +67,6 @@ namespace System
             {
                 int endIndex = this.StartIndex + PageSize;
                 return endIndex;
-                //判断记录总数
-                //return this.RecordCount > endIndex ? endIndex : this.RecordCount;
             }
         }
         /// <summary>

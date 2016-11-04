@@ -24,29 +24,50 @@ namespace System
         public static readonly string Phone = @"^1[3-8]+\d{9}$";
         //邮箱
         public static readonly string EMail = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
+        //URL 地址
+        // public static readonly string URL = @"(https?|ftp|file|ws)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?";
     }
+    /// <summary>
+    /// 常用正则表达式及模板使用
+    /// </summary>
     public class RegexHelper
     {
-        #region 常用判断
-        //1.验证一个字符串是否是整数
+
+        #region 数字类型
+        /// <summary>
+        /// 1.验证一个字符串是否是整数
+        /// </summary>
+        /// <param name="str">指定字符串</param>
+        /// <returns></returns>
         public static bool IsPositiveInteger(string str)
         {
             return IsMatch(RegexExpression.PositiveInteger, str);
         }
-        //2.验证一个字符串是否是Ipv4
-        public static bool IsIpv4(string str)
-        {
-            return IsMatch(RegexExpression.Ipv4, str);
-        }
-        //3.验证输入内容是否是数字
+        /// <summary>
+        /// 验证输入内容是否是数字
+        /// </summary>
+        /// <param name="str">指定字符串</param>
+        /// <returns></returns>
         public static bool IsNumber(string str)
         {
             return IsMatch(RegexExpression.Number, str);
         }
+        #endregion
+
+        #region 已定义模板匹配
+        /// <summary>
+        /// 2.验证一个字符串是否是Ipv4 地址
+        /// </summary>
+        /// <param name="str">指定字符串</param>
+        /// <returns></returns>
+        public static bool IsIpv4(string str)
+        {
+            return IsMatch(RegexExpression.Ipv4, str);
+        }
         /// <summary>
         /// 4.验证字符串是否是手机号
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="str">指定字符串</param>
         /// <returns></returns>
         public static bool IsPhone(string str)
         {
@@ -55,13 +76,17 @@ namespace System
         /// <summary>
         /// 5.验证字符串是否是邮箱
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="str">指定字符串</param>
         /// <returns></returns>
         public static bool IsEmail(string str)
         {
             return IsMatch(RegexExpression.EMail, str);
         }
+        #endregion
 
+
+
+        #region 常用判断
         /// <summary>
         /// 判断富文本是否为空
         /// 是否只有任意的空白符
@@ -73,7 +98,7 @@ namespace System
         {
             if (string.IsNullOrEmpty(str))
                 return true;
-            Regex reg = new Regex(@"\S",RegexOptions.Multiline);
+            Regex reg = new Regex(@"\S", RegexOptions.Multiline);
             return !reg.IsMatch(str);
         }
         /// <summary>
@@ -111,6 +136,55 @@ namespace System
         }
         #endregion
 
+
+
+        #region Url操作
+        /// <summary>
+        /// 验证是否是URL链接
+        /// </summary>
+        /// <param name="str">指定字符串</param>
+        /// <returns></returns>
+        public static bool IsURL(string str)
+        {
+            string pattern = @"^(https?|ftp|file|ws)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?$";
+            return IsMatch(pattern, str);
+        }
+        /// <summary>
+        /// 获取字符串中所有的链接
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static List<string> MatchsURL(string input)
+        {
+            string pattern = @"(https?|ftp|file|ws)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?";
+            return Matchs(input, pattern);
+        }
+        #endregion
+
+
+        #region 域名操作
+        /// <summary>
+        /// 验证字符串是否是域名
+        /// </summary>
+        /// <param name="str">指定字符串</param>
+        /// <returns></returns>
+        public static bool IsDomain(string str)
+        {
+            string pattern = @"^[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$";
+            return IsMatch(pattern, str);
+        }
+        /// <summary>
+        /// 匹配获取字符串中所有的域名
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static List<string> MatchsDomain(string input)
+        {
+            string pattern = @"[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+";
+            return Matchs(input, pattern);
+        }
+        #endregion
+
         #region 常用替换
         /// <summary>
         /// 字符串的替换
@@ -133,7 +207,7 @@ namespace System
         #endregion
 
         /// <summary>
-        /// 拍配结果  返回匹配结果的数组
+        /// 匹配结果  返回匹配结果的数组
         /// </summary>
         /// <param name="input"></param>
         /// <param name="expression"></param>
