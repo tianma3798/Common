@@ -69,6 +69,7 @@ namespace System.Web
         /// 获取RouteData参数
         /// </summary>
         /// <param name="key">键</param>
+        /// <param name="defvalue">默认值</param>
         /// <returns>值</returns>
         public static string GetStringRoute(string key, string defvalue)
         {

@@ -12,8 +12,17 @@ namespace System.Web
     /// </summary>
     public partial class RequestHelper
     {
+        /// <summary>
+        /// 请求上下文
+        /// </summary>
         public HttpRequest req;
+        /// <summary>
+        /// 相应上下文
+        /// </summary>
         public HttpResponse resp;
+        /// <summary>
+        /// 构造初始化
+        /// </summary>
         public RequestHelper()
         {
             req = HttpContext.Current.Request;
