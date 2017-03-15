@@ -144,7 +144,7 @@ namespace Common
         {
             get
             {
-                string program = CurrentProgram;
+                string program = CurrentDLL;
                 DirectoryInfo info = new DirectoryInfo(program);
                 return info.Parent.Parent.FullName;
             }
@@ -166,35 +166,35 @@ namespace Common
         /// </summary>
         /// <param name="sub"></param>
         /// <returns></returns>
-        public static string GetCurrentDLLSub(string sub)
+        public static string GetCurrentSub(string sub)
         {
             DirectoryInfo info = new DirectoryInfo(CurrentDLL);
-          return  info.CreateSubdirectory(sub).FullName;
-        }
-        /// <summary>
-        /// 获取当前程序的子目录
-        /// </summary>
-        /// <param name="sub"></param>
-        /// <returns></returns>
-        public static string GetCurrentProgramSub(string sub)
-        {
-            string path = CurrentProgram;
-            path += "\\" + sub;
-            //判断子目录是否存在
-            if (Directory.Exists(path))
-            {
-                return path;
-            }
-            DirectoryInfo info = new DirectoryInfo(CurrentProgram);
             return info.CreateSubdirectory(sub).FullName;
         }
+        ///// <summary>
+        ///// 获取当前程序的子目录
+        ///// </summary>
+        ///// <param name="sub"></param>
+        ///// <returns></returns>
+        //public static string GetCurrentSub(string sub)
+        //{
+        //    string path = CurrentDLL;
+        //    path += "\\" + sub;
+        //    //判断子目录是否存在
+        //    if (Directory.Exists(path))
+        //    {
+        //        return path;
+        //    }
+        //    DirectoryInfo info = new DirectoryInfo(CurrentDLL);
+        //    return info.CreateSubdirectory(sub).FullName;
+        //}
         /// <summary>
         /// 获取当前程序下的数据目录
         /// </summary>
         /// <returns></returns>
-        public static string GetCurrentProgramData()
+        public static string GetCurrentData()
         {
-            return GetCurrentProgramSub("data");
+            return GetCurrentSub("data");
         }
         #endregion
 
