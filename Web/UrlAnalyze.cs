@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Test
+namespace System.Web
 {
     /// <summary>
     /// Url地址的格式化和反格式化
@@ -50,7 +50,7 @@ namespace Test
         /// </summary>
         public string Hash { get; set; }
         /// <summary>
-        /// 链接查询参数部分(带问号) ?one=1&two=2
+        /// 链接查询参数部分(带问号) '?one=1&two=2'
         /// </summary>
         public string Search { get; set; }
         /// <summary>
@@ -182,6 +182,7 @@ namespace Test
         /// </summary>
         /// <param name="key">键</param>
         /// <param name="value">值</param>
+        /// <param name="Encode">是否加密处理值，默认不处理</param>
         /// <returns></returns>
         public void AddOrUpdateSearch(string key, string value, bool Encode = false)
         {
@@ -291,7 +292,7 @@ namespace Test
             return list;
         }
         /// <summary>
-        /// 将字符串中的链接成<a>标签
+        /// 将字符串中的链接成 a 标签
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
