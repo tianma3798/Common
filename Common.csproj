@@ -49,6 +49,7 @@
     <Compile Include="Common\ByteHelper.cs" />
     <Compile Include="Common\ImgHelper.cs" />
     <Compile Include="Common\PageInfo.cs" />
+    <Compile Include="Common\Pagination.cs" />
     <Compile Include="ConfigValue.cs" />
     <Compile Include="Mail\SmtpHelper.cs" />
     <Compile Include="Mail\SmtpSendInfo.cs" />

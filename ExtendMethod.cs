@@ -19,7 +19,7 @@ namespace System
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static string ToJsonString(this Object obj)
+        public static string ToJson(this Object obj)
         {
             JavaScriptSerializer s = new JavaScriptSerializer();
             StringBuilder sb = new StringBuilder();
@@ -29,12 +29,14 @@ namespace System
         /// <summary>
         /// 将json字符串转化成对象
         /// </summary>
-        public static T JsonDeserialezer<T>(this string str)
+        public static T JsonDese<T>(this string str)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             T t = (T)serializer.Deserialize(str, typeof(T));
             return t;
         }
+
+
         /// <summary>
         /// 过滤掉 html 字符串 方法
         /// </summary>
@@ -72,8 +74,6 @@ namespace System
 
             return Htmlstring;
         }
-
-
 
         /// <summary>
         /// 过滤重复数据
